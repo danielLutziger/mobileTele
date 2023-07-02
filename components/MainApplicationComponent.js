@@ -7,7 +7,7 @@ import { useData } from "../utils/useData";
 function MainApplicationComponent() {
     const [content, setContent] = useState("Main");
     const [menuBarContent, setMenuBarContent] = useState();
-    const { componentData, subsystems, sensors, actuators, externalStates, states } = useData();
+    const { subsystems, sensors, actuators, externalStates, states } = useData();
 
     useEffect(() => {
         setMenuBarContent([...(subsystems ?? []), "Search", "Favourites", "Login"]);
