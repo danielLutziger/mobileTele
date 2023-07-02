@@ -7,7 +7,6 @@ const EXTERNAL_STATES_FILTER = "ext_";
 const STATES_FILTER = "states_";
 
 export const useData = () => {
-    const [componentData, setComponentData] = useState();
     const [subsystems, setSubsystems] = useState();
     const [sensors, setSensors] = useState();
     const [actuators, setActuators] = useState();
@@ -15,8 +14,6 @@ export const useData = () => {
     const [states, setStates] = useState();
 
     useEffect(() => {
-        setComponentData(MockComponentDefinitions);
-
         // filter all different subsystems
         const systems = [...new Set(MockComponentDefinitions.map(item => item.page))];
         setSubsystems(systems);
@@ -38,5 +35,5 @@ export const useData = () => {
         setStates(states);
     }, []);
 
-    return { componentData, subsystems, sensors, actuators, externalStates, states };
+    return { subsystems, sensors, actuators, externalStates, states };
 }
