@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react';
 import MockComponentDefinitions from '../mockData/mockComponentDefinitions.json';
+import {ACTUATOR_FILTER, EXTERNAL_STATES_FILTER, SENSOR_FILTER, STATES_FILTER} from "../utils/constants";
 
-const SENSOR_FILTER = "sens_";
-const ACTUATOR_FILTER = "act_";
-const EXTERNAL_STATES_FILTER = "ext_";
-const STATES_FILTER = "states_";
 
 export const useData = () => {
     const [subsystems, setSubsystems] = useState();

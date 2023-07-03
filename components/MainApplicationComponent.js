@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {Box, Text, useColorMode, useTheme} from "native-base";
+import {Box, Text, useColorMode, useTheme, View} from "native-base";
 import SystemList from "./subsystems/SystemList";
 import MenuBar from "./MenuBar";
-import { useData } from "../utils/useData";
+import { useData } from "../hooks/useData";
+import ListDetailViewNavigator from "./ListDetailViewNavigator";
 
 function MainApplicationComponent() {
     const [content, setContent] = useState("Main");
@@ -21,11 +22,11 @@ function MainApplicationComponent() {
     const theme = useTheme();
 
     return (
-        <Box flex={1} style={{height: '100%'}} flexDirection="column" backgroundColor={theme.colors[colorMode][100]}>
-            <Box flex={1} alignItems="center" justifyContent="center">
+        <View flex={1}>
+            <View flex={1}>
                 {content === 'Home' && <SystemList sensors={sensors} actuators={actuators} externalStates={externalStates} states={states} />}
                 {subsystems?.includes(content) && (
-                    <SystemList
+                    <ListDetailViewNavigator
                         subsystem={content}
                         sensors={sensors?.filter(sensor => sensor.page === content)}
                         actuators={actuators?.filter(actuator => actuator.page === content)}
@@ -36,10 +37,10 @@ function MainApplicationComponent() {
                 {content === "Search" && <Text>Search Page</Text>}
                 {content === "Favourites" && <Text>Favourites Page</Text>}
                 {content === "Login" && <Text>Login Page</Text>}
-            </Box>
+            </View>
             <Box flex={0}>
                 <MenuBar subsystems={menuBarContent} activeContent={content} setCurrentActivePage={setContent} colorMode={colorMode} toggleColorMode={toggleColorMode} theme={theme}/>
             </Box>
-        </Box>
+        </View>
     );
 } export default MainApplicationComponent;

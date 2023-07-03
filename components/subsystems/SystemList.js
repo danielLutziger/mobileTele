@@ -1,9 +1,9 @@
 import React from "react";
 import {SectionList, Text} from "react-native";
 import ListItem from "./ListItem";
-import {Box, Heading, useColorMode, useContrastText, useTheme, View} from "native-base";
+import {Heading, useColorMode, useContrastText, useTheme, View} from "native-base";
 
-const SystemList = ({subsystem, sensors, actuators, externalStates, states}) => {
+const SystemList = ({navigation, subsystem, sensors, actuators, externalStates, states}) => {
     const {
         colorMode
     } = useColorMode();
@@ -31,24 +31,20 @@ const SystemList = ({subsystem, sensors, actuators, externalStates, states}) => 
     ];
 
     return (
-        <View style={{ flex: 1, flexDirection: 'row' }}>
-            <View style={{ flex: 3/4 }}>
-                <Box>
-                    <Box>
-                        <Heading color={contrast}>
-                            {subsystem}
-                        </Heading>
-                        <SectionList
-                            sections={data}
-                            keyExtractor={(item, index) => item + index}
-                            renderItem={({item}) => <ListItem item={item}/>}
-                            renderSectionHeader={({section: {title}}) => (
-                                <Text style={{ fontWeight: "bold", color: textColor}} >{title}</Text>
-                            )}
-                            style={{width: '100%', height: '100%'}}
-                        />
-                    </Box>
-                </Box>
+        <View flex={1} backgroundColor={theme.colors[colorMode][100]}>
+            <View flex={1} width={"75%"} paddingBottom={70} alignSelf={"center"}>
+                <Heading color={contrast}>
+                    {subsystem}
+                </Heading>
+                <SectionList
+                    sections={data}
+                    keyExtractor={(item, index) => item + index}
+                    renderItem={({item}) => <ListItem item={item} navigation={navigation}/>}
+                    renderSectionHeader={({section: {title}}) => (
+                        <Text style={{fontWeight: "bold", color: textColor}}>{title}</Text>
+                    )}
+                    flex={1}
+                />
             </View>
         </View>
     );
