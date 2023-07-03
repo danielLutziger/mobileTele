@@ -8,11 +8,9 @@ export function generateMockData(key) {
         const health = getRandomHealth();
 
         const mockData = {
-            [key]: {
-                timestamp,
-                value,
-                health,
-            },
+            time: timestamp,
+            value,
+            health,
         };
 
         data.push(mockData);
@@ -28,11 +26,9 @@ export function generateMockDataForOneSecond(key, i) {
     const health = getRandomHealth();
 
     const mockData = {
-        [key]: {
-            timestamp,
-            value,
-            health,
-        },
+        time: timestamp,
+        value,
+        health,
     };
 
     return mockData;

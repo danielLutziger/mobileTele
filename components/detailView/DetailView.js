@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import {useColorMode, useTheme, View, Text} from "native-base";
 import {useDetailFilter} from "../../hooks/useDetailFilter";
 import GraphView from "./GraphView";
+import HelloWorld from "../skia/HelloWorld";
+import {SkiaGraph} from "../skia/SkiaGraph";
 
 const INTERVAL = 1000;
 export default function DetailView({route}) {
@@ -25,7 +27,7 @@ export default function DetailView({route}) {
             {sensors?.map((element) => {
                 return(
                     <View key={element}>
-                        <GraphView graphElement={element} />
+                        <SkiaGraph graphElement={element} />
                     </View>
                 )
             })

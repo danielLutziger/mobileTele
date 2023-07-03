@@ -1,4 +1,3 @@
-import {View} from "native-base";
 import {generateMockData, generateMockDataForOneSecond} from "../../mockData/mockDataStream";
 import {useEffect, useState} from "react";
 import Graph from "./GraphConfig";
