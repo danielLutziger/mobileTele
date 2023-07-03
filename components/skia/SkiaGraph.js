@@ -16,6 +16,7 @@ import {curveBasis, line, scaleLinear, scaleTime} from "d3";
 import {Easing, View, Pressable, Text, StyleSheet} from "react-native";
 import {CheckIcon, Select} from "native-base";
 import {generateMockData, generateMockDataForOneSecond} from "../../mockData/mockDataStream";
+import {originalData, animatedData, animatedData3} from "./data";
 
 export const SkiaGraph = () => {
     const transition = useValue(1);
@@ -24,8 +25,6 @@ export const SkiaGraph = () => {
         next: 1,
     });
     const [visibleDataPoints, setVisibleDataPoints] = useState(30);
-    const [mockData, setMockData] = useState(generateMockData("Key"));
-    const [graphData, setGraphData] = useState([])
 
     const GRAPH_HEIGHT = 400;
     const GRAPH_WIDTH = 360;
@@ -36,8 +35,8 @@ export const SkiaGraph = () => {
         const y = scaleLinear().domain([0, max]).range([GRAPH_HEIGHT, 35]);
 
         const x = scaleTime()
-            .domain([new Date(Date.now() - visibleDataPoints * 1000), new Date()])
-            .range([0, GRAPH_WIDTH]);
+            .domain([new Date(2000, 1, 1), new Date(2000, 1, 15)])
+            .range([10, GRAPH_WIDTH - 10]);
 
         const curvedLine = line()
             .x((d) => x(new Date(d.date)))
@@ -52,7 +51,8 @@ export const SkiaGraph = () => {
             curve: skPath,
         };
     };
-    const transitionCharts = (end) => {
+
+    const transitionStart = (end) => {
         state.current = {
             current: end,
             next: state.current.current,
@@ -64,43 +64,15 @@ export const SkiaGraph = () => {
         });
     };
 
-    //const graphData = [makeGraph(originalData), makeGraph(animatedData)];
+    const graphData = [makeGraph(originalData), makeGraph(animatedData3)];
 
     const currentPath = useComputedValue(() => {
-        let graph = graphData;
-        if(graphData.length === 0){
-            graph = makeGraph([{value: 0, timestamp: new Date(Date.now())}, {value: 3, timestamp: new Date(Date.now())}]);
-        }
-        // this does not make sense, it is the same graph over and over again and not properly stored in the array.
-        console.log(state.current.current)
-        console.log(graph[state.current.current])
-        const start = graph[state.current.current].curve;
-        const end = graph[state.current.next].curve;
+        const start = graphData[state.current.current].curve;
+        const end = graphData[state.current.next].curve;
         const result = start.interpolate(end, transition.current);
         return result?.toSVGString() ?? "0";
-
     }, [state, transition]);
 
-
-/*    useEffect(() => {
-        const newMockData = mockData.slice(0, visibleDataPoints);
-        transitionCharts(/*insert here*//*);
-    }, [visibleDataPoints, mockData]);*/
-
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setMockData((prevData) => {
-                const newMockData = [...prevData];
-                newMockData.unshift(generateMockDataForOneSecond("Key", newMockData.length + 1));
-                return newMockData.slice(0, visibleDataPoints);
-            });
-            setGraphData(makeGraph(mockData));
-        }, 1000);
-        return () => {
-            clearInterval(interval);
-        };
-    }, [visibleDataPoints]);
 
     return (
         <View>
@@ -116,9 +88,9 @@ export const SkiaGraph = () => {
                 <Select selectedValue={visibleDataPoints} minWidth="200" accessibilityLabel="Choose Service"
                         placeholder="Choose Service"
                         _selectedItem={{bg: "teal.600", endIcon: <CheckIcon size="5"/>}} mt={1}
-                        onValueChange={itemValue => setVisibleDataPoints(itemValue)}>
-                    <Select.Item label="30 Seconds" value={30}/>
-                    <Select.Item label="60 Seconds" value={60}/>
+                        onValueChange={itemValue => transitionStart(itemValue)}>
+                    <Select.Item label="30 Seconds" value={0}/>
+                    <Select.Item label="60 Seconds" value={1}/>
                     <Select.Item label="180 Seconds" value={180}/>
                     <Select.Item label="300 Seconds" value={300}/>
                     <Select.Item label="All" value={1200} disabled={true}/>
