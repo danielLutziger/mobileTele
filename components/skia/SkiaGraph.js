@@ -18,7 +18,11 @@ import {CheckIcon, Select} from "native-base";
 import {generateMockData, generateMockDataForOneSecond} from "../../mockData/mockDataStream";
 import {originalData, animatedData, animatedData3} from "./data";
 
-export const SkiaGraph = () => {
+export const SkiaGraph = ({graphElement}) => {
+
+    const [mockData, setMockData] = useState([]);
+    const [graphPathData, setGraphPathData] = useState([]);
+
     const transition = useValue(1);
     const state = useValue({
         current: 0,
@@ -72,6 +76,22 @@ export const SkiaGraph = () => {
         const result = start.interpolate(end, transition.current);
         return result?.toSVGString() ?? "0";
     }, [state, transition]);
+
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+
+            let newMockData = mockData;
+            newMockData.unshift(generateMockDataForOneSecond(graphElement, newMockData.length + 1));
+            const graphMockData = newMockData.slice(0, visibleDataPoints); //this will get super slow at some point as this stores all the values... api required here
+            setMockData(newMockData);
+            console.log(mockData)
+            setGraphPathData(makeGraph(graphMockData));
+        }, 1000);
+        return () => {
+            clearInterval(interval);
+        };
+    }, [visibleDataPoints]);
 
 
     return (
