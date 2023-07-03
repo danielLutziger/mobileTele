@@ -21,9 +21,6 @@ export const useDetailFilter = (item) => {
                 externalStatesArr.push(definition);
             } else if (definition?.startsWith(STATES_FILTER)) {
                 statesArr.push(definition);
-            } else {
-                console.log("should not here")
-                console.log(definition)
             }
         };
 

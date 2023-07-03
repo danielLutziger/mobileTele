@@ -1,23 +1,26 @@
 import {View} from "native-base";
 import {generateMockData, generateMockDataForOneSecond} from "../../mockData/mockDataStream";
 import {useEffect, useState} from "react";
+import Graph from "./GraphConfig";
 
 const INTERVAL = 1000;
 const GraphView = ({graphElement}) => {
     const [data, setData] = useState(generateMockData(graphElement));
 
+    let i = 0;
+
     useEffect(() => {
         const interval = setInterval(() => {
-            const stream = generateMockDataForOneSecond(graphElement);
+            const stream = generateMockDataForOneSecond(graphElement, i);
             setData(prevData => [...prevData, stream]);
-            console.log(data);
+            i += 1;
         }, INTERVAL);
         // Clear the interval on component unmount
         return () => clearInterval(interval);
-    }, [data]);
+    }, []);
 
     return(
-        <View></View>
+        <Graph dataCollection={data} currentItem={graphElement} />
     )
 }
 export default GraphView;

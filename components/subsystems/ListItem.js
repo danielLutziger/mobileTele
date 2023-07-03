@@ -38,7 +38,7 @@ const ListItem = ({item, navigation}) => {
                     <Text color={textColor}>{item.label}</Text>
 
                     {/* Add minigraph here */}
-                    <Text color={textColor}>Graph</Text>
+                    <Text color={textColor}>{item.type}</Text>
 
                     <Badge colorScheme={"green"}>99</Badge>
 

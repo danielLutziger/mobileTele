@@ -16,20 +16,21 @@ export const useData = () => {
         setSubsystems(systems);
 
         // filter all sensors
-        let sensItems = MockComponentDefinitions.filter(item => item.children.some(child => child.startsWith(SENSOR_FILTER)));
+        let sensItems = MockComponentDefinitions.filter(item => item.string_key.startsWith(SENSOR_FILTER));
         setSensors(sensItems);
 
         // filter all actuators
-        let actItems = MockComponentDefinitions.filter(item => item.children.some(child => child.startsWith(ACTUATOR_FILTER)));
+        let actItems = MockComponentDefinitions.filter(item => item.string_key.startsWith(ACTUATOR_FILTER));
         setActuators(actItems);
 
         // filter all the externalStates
-        let extStates = MockComponentDefinitions.filter(item => item.children.some(child => child.startsWith(EXTERNAL_STATES_FILTER)));
+        let extStates = MockComponentDefinitions.filter(item => item.string_key.startsWith(EXTERNAL_STATES_FILTER));
         setExternalStates(extStates);
 
         // filter all the states
-        let states = MockComponentDefinitions.filter(item => item.children.some(child => child.startsWith(STATES_FILTER)));
+        let states = MockComponentDefinitions.filter(item => item.string_key.startsWith(STATES_FILTER));
         setStates(states);
+
     }, []);
 
     return { subsystems, sensors, actuators, externalStates, states };
