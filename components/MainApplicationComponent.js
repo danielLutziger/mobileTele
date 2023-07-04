@@ -5,6 +5,8 @@ import MenuBar from "./MenuBar";
 import { useData } from "../hooks/useData";
 import ListDetailViewNavigator from "./ListDetailViewNavigator";
 import HelloWorld from "./skia/HelloWorld";
+import {HelloWorldXPO} from "./skia/SimpleComponentWeb";
+import SkiaLoadingComponent from "./skia/SkiaLoadingComponent";
 
 function MainApplicationComponent() {
     const [content, setContent] = useState("Main");
@@ -38,7 +40,7 @@ function MainApplicationComponent() {
                 {content === "Search" && <Text>Search Page</Text>}
                 {content === "Favourites" && <Text>Favourites Page</Text>}
                 {/*content === "Login" && <Text>Login Page</Text>*/}
-                {content === "Login" && <HelloWorld />}
+                {content === "Login" && <SkiaLoadingComponent />}
             </View>
             <Box flex={0}>
                 <MenuBar subsystems={menuBarContent} activeContent={content} setCurrentActivePage={setContent} colorMode={colorMode} toggleColorMode={toggleColorMode} theme={theme}/>
